@@ -34,6 +34,12 @@ export const Content = styled.div`
         color: #c7c7c7;
       }
     }
+    span {
+      color: #7d40e7;
+      align-self: flex-start;
+      margin: 0 0 10px;
+      font-weight: bold;
+    }
     div {
       display: flex;
       flex-direction: column;
@@ -63,7 +69,7 @@ export const Content = styled.div`
         opacity: 1;
       }
     }
-    span {
+    label {
       color: ${lighten(0.15, '#000')};
       align-self: flex-start;
       margin: 0 0 10px;
