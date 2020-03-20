@@ -20,7 +20,7 @@ export default function AvatarInput() {
         path: 'dataset.file',
       });
     }
-  }, [ref, registerField]);
+  }, [ref.current]);
 
   async function handleChange(e) {
     const data = new FormData();
