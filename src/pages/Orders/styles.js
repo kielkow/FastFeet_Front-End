@@ -100,19 +100,19 @@ export const Content = styled.div`
       width: 10%;
     }
     li > span:first-child + span {
-      width: 15%;
+      width: 15.5%;
     }
     li > span:first-child + span + span {
       width: 15%;
     }
     li > span:first-child + span + span + span {
-      width: 15%;
+      width: 15.5%;
     }
     li > span:first-child + span + span + span + span {
       width: 15%;
     }
     li > span:first-child + span + span + span + span + span {
-      width: 26.5%;
+      width: 26%;
     }
     li > div {
       width: 0%;

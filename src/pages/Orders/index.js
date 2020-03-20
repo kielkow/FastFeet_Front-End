@@ -199,12 +199,11 @@ export default function Orders() {
           {orders.map(order => (
             <li key={order.id}>
               <span>#{order.id}</span>
-              <span>{order.recipient}</span>
-              <span>{order.courier}</span>
-              <span>{order.city}</span>
-              <span>{order.state}</span>
-              <span>{order.status}</span>
-              <span>{order.actions}</span>
+              <span>{order.recipient.name}</span>
+              <span>{order.courier.name}</span>
+              <span>{order.recipient.city}</span>
+              <span>{order.recipient.state}</span>
+              <span>{order.status || 'undefined'}</span>
               <div
                 style={{
                   fontSize: '20px',
