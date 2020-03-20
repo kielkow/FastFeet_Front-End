@@ -8,8 +8,8 @@ import { Input } from '@rocketseat/unform';
 import { MdAdd } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import history from '~/services/history';
+// import { toast } from 'react-toastify';
+// import history from '~/services/history';
 import { Container, Content, Pagination, Previous, Next } from './styles';
 
 import api from '~/services/api';
@@ -54,6 +54,7 @@ export default function Orders() {
     loadOrders();
   }, [page]);
 
+  /*
   async function reloadOrders() {
     const response = await api.get('/orders', {
       params: {
@@ -98,6 +99,7 @@ export default function Orders() {
       }
     }
   }
+  */
 
   /*
   function editRequest(student) {
@@ -185,26 +187,33 @@ export default function Orders() {
       <Content>
         <header>
           <span>ID</span>
-          <span>RECIPIENT</span>
-          <span>COURIER</span>
-          <span>CITY</span>
-          <span>STATE</span>
-          <span>STATUS</span>
-          <span>ACTIONS</span>
+          <span>Recipient</span>
+          <span>Courier</span>
+          <span>City</span>
+          <span>State</span>
+          <span>Status</span>
+          <span>Actions</span>
           <span />
         </header>
         <ul>
           {orders.map(order => (
             <li key={order.id}>
-              <span>{order.id}</span>
+              <span>#{order.id}</span>
               <span>{order.recipient}</span>
               <span>{order.courier}</span>
               <span>{order.city}</span>
               <span>{order.state}</span>
               <span>{order.status}</span>
               <span>{order.actions}</span>
-              <div>
-                <Link
+              <div
+                style={{
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  color: '#989898',
+                  paddingBottom: '3px',
+                }}
+              >
+                {/* <Link
                   id="edit"
                   to="/editorder"
                   // onClick={() => editRequest(order)}
@@ -218,7 +227,8 @@ export default function Orders() {
                   value={order.id}
                 >
                   delete
-                </button>
+                </button> */}
+                ...
               </div>
             </li>
           ))}

@@ -9,7 +9,7 @@ export const Container = styled.div`
   strong {
     font-size: 24px;
     color: ${lighten(0.03, '#444444')};
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
   header {
     display: flex;
@@ -17,6 +17,7 @@ export const Container = styled.div`
     input {
       width: 240px;
       padding: 8px 10px;
+      border-radius: 1px;
       border: 0.5px solid ${lighten(0.6, '#444444')};
     }
     div {
@@ -44,16 +45,17 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: left;
-  background: #fff;
-  margin-top: 30px;
+  margin-top: 20px;
   border-radius: 4px;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   header {
     display: flex;
     justify-content: left;
     max-width: 1000px;
     font-weight: bold;
     margin-bottom: 20px;
+    padding-left: 15px;
   }
   ul {
     display: flex;
@@ -61,8 +63,11 @@ export const Content = styled.div`
     justify-content: left;
     li {
       display: flex;
-      padding-bottom: 15px;
+      align-items: center;
+      padding: 15px;
+      border-radius: 4px;
       border-bottom: 1px solid #eee;
+      background: #fff;
       & + li {
         margin-top: 15px;
       }
@@ -92,26 +97,44 @@ export const Content = styled.div`
       }
     }
     li > span:first-child {
-      width: 30%;
+      width: 10%;
     }
     li > span:first-child + span {
-      width: 31%;
+      width: 15%;
     }
     li > span:first-child + span + span {
-      width: 29%;
+      width: 15%;
+    }
+    li > span:first-child + span + span + span {
+      width: 15%;
+    }
+    li > span:first-child + span + span + span + span {
+      width: 15%;
+    }
+    li > span:first-child + span + span + span + span + span {
+      width: 26.5%;
     }
     li > div {
       width: 0%;
     }
   }
   header > span:first-child {
-    width: 30%;
+    width: 10%;
   }
   header > span:first-child + span {
-    width: 30.5%;
+    width: 15%;
   }
   header > span:first-child + span + span {
-    width: 30%;
+    width: 15%;
+  }
+  header > span:first-child + span + span + span {
+    width: 15%;
+  }
+  header > span:first-child + span + span + span + span {
+    width: 15%;
+  }
+  header > span:first-child + span + span + span + span + span {
+    width: 23.5%;
   }
   header > div {
     width: 0%;
