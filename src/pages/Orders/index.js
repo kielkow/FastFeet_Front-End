@@ -242,6 +242,7 @@ export default function Orders() {
         >
           Previous
         </Previous>
+        <span>{page}</span>
         <Next
           type="button"
           onClick={() => next()}

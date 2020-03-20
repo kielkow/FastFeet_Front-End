@@ -145,6 +145,12 @@ export const Pagination = styled.div`
   margin-top: 15px;
   display: flex;
   align-items: center;
+  span {
+    color: #7d40e7;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 `;
 
 export const Previous = styled.button.attrs(props => ({
