@@ -103,10 +103,10 @@ export const Content = styled.div`
       width: 15.5%;
     }
     li > span:first-child + span + span {
-      width: 15%;
+      width: 18.5%;
     }
     li > span:first-child + span + span + span {
-      width: 15.5%;
+      width: 12.5%;
     }
     li > span:first-child + span + span + span + span {
       width: 15%;
@@ -125,10 +125,10 @@ export const Content = styled.div`
     width: 15%;
   }
   header > span:first-child + span + span {
-    width: 15%;
+    width: 18%;
   }
   header > span:first-child + span + span + span {
-    width: 15%;
+    width: 12%;
   }
   header > span:first-child + span + span + span + span {
     width: 15%;

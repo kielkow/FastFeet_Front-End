@@ -187,13 +187,18 @@ export default function Orders() {
   function checkColorStatus(status) {
     if (status === 'withdrawn') return '#4d85ee';
     if (status === 'canceled') return '#de3b3b';
-    return '#4cb24c';
+    return '#45a045';
   }
 
   function backroundColorStatus(status) {
-    if (status === 'withdrawn') return '#bad2ff';
-    if (status === 'canceled') return '#fab0b0';
-    return '#d7e8d7';
+    if (status === 'withdrawn') return '#c8d7f3';
+    if (status === 'canceled') return '#f5bfbf';
+    return '#c1ecc1';
+  }
+
+  function splitCourierName(name) {
+    const splitName = name.split(' ');
+    return `${splitName[0].charAt(0)}${splitName[1].charAt(0)}`;
   }
 
   const handleClick = event => {
@@ -238,7 +243,24 @@ export default function Orders() {
             <li key={order.id}>
               <span>#{order.id}</span>
               <span>{order.recipient.name}</span>
-              <span>{order.courier.name}</span>
+              <span>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div
+                    style={{
+                      border: '0.5px solid #eee',
+                      marginRight: '5px',
+                      padding: '7px',
+                      borderRadius: '50%',
+                      fontSize: '16px',
+                      backgroundColor: `${backroundColorStatus(order.status)}`,
+                      color: `${checkColorStatus(order.status)}`,
+                    }}
+                  >
+                    {splitCourierName(order.courier.name)}
+                  </div>
+                  {order.courier.name}
+                </div>
+              </span>
               <span>{order.recipient.city}</span>
               <span>{order.recipient.state}</span>
               <span>
