@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 import { Input } from '@rocketseat/unform';
 import { MdAdd } from 'react-icons/md';
+import { FaCircle } from 'react-icons/fa';
 
 import { Link } from 'react-router-dom';
 // import { toast } from 'react-toastify';
@@ -166,6 +167,18 @@ export default function Orders() {
     setOrders(similarOrders.data);
   }
 
+  function checkColorStatus(status) {
+    if (status === 'withdrawn') return '#4d85ee';
+    if (status === 'canceled') return '#de3b3b';
+    return '#4cb24c';
+  }
+
+  function backroundColorStatus(status) {
+    if (status === 'withdrawn') return '#bad2ff';
+    if (status === 'canceled') return '#fab0b0';
+    return '#d7e8d7';
+  }
+
   return (
     <Container>
       <strong>Management Orders</strong>
@@ -203,7 +216,32 @@ export default function Orders() {
               <span>{order.courier.name}</span>
               <span>{order.recipient.city}</span>
               <span>{order.recipient.state}</span>
-              <span>{order.status || 'undefined'}</span>
+              <span>
+                <div
+                  style={{
+                    maxWidth: '95px',
+                    // border: '0.5px solid #000',
+                    borderRadius: '10px',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                    paddingTop: '3px',
+                    paddingBottom: '3px',
+                    paddingRight: '4px',
+                    paddingLeft: '4px',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    backgroundColor: `${backroundColorStatus(order.status)}`,
+                    color: `${checkColorStatus(order.status)}`,
+                  }}
+                >
+                  <FaCircle
+                    size={10}
+                    style={{ marginRight: '2px' }}
+                    color={checkColorStatus(order.status)}
+                  />
+                  {order.status.toUpperCase() || 'undefined'}
+                </div>
+              </span>
               <div
                 style={{
                   fontSize: '20px',
