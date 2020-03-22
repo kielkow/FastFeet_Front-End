@@ -5,10 +5,14 @@
 import React, { useState, useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 import { Input } from '@rocketseat/unform';
-import { MdAdd } from 'react-icons/md';
+import { MdAdd, MdVisibility, MdEdit, MdDelete } from 'react-icons/md';
 import { FaCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import Options from '../../components/Options';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
+// import Options from '../../components/Options';
 
 // import { toast } from 'react-toastify';
 // import history from '~/services/history';
@@ -18,11 +22,23 @@ import api from '~/services/api';
 
 // import * as StudentActions from '../../store/modules/student/actions';
 
+const useStyles = makeStyles(() => ({
+  root: {
+    fontSize: '20px',
+    fontWeight: 'bold',
+    color: '#989898',
+    padding: '0',
+    width: '20px',
+  },
+}));
+
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   let [page, setPage] = useState(1);
   const [loadingNext, setLoadingNext] = useState(false);
   const [finalPage, setFinalPage] = useState(false);
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   // const dispatch = useDispatch();
 
@@ -180,6 +196,14 @@ export default function Orders() {
     return '#d7e8d7';
   }
 
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Container>
       <strong>Management Orders</strong>
@@ -243,7 +267,7 @@ export default function Orders() {
                   {order.status.toUpperCase() || 'undefined'}
                 </div>
               </span>
-              <div>
+              <div style={{ marginRight: '50px', boxShadow: 'none' }}>
                 {/*
                 <Link
                   id="edit"
@@ -260,7 +284,58 @@ export default function Orders() {
                 >
                   delete
                 </button> */}
-                <Options />
+                <Button
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                  className={classes.root}
+                >
+                  ...
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>
+                    <MdVisibility
+                      color="#7d40e7"
+                      size={18}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginRight: '10px',
+                      }}
+                    />
+                    <span>See</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <MdEdit
+                      color="#7d40e7"
+                      size={18}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginRight: '10px',
+                      }}
+                    />
+                    <span>Edit</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <MdDelete
+                      color="#de3b3b"
+                      size={18}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginRight: '10px',
+                      }}
+                    />
+                    <span>Delete</span>
+                  </MenuItem>
+                </Menu>
               </div>
             </li>
           ))}

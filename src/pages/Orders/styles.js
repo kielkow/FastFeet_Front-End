@@ -112,7 +112,7 @@ export const Content = styled.div`
       width: 15%;
     }
     li > span:first-child + span + span + span + span + span {
-      width: 26%;
+      width: 24%;
     }
     li > div {
       width: 0%;
