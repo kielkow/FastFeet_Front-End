@@ -7,8 +7,9 @@ import React, { useState, useEffect } from 'react';
 import { Input } from '@rocketseat/unform';
 import { MdAdd } from 'react-icons/md';
 import { FaCircle } from 'react-icons/fa';
-
 import { Link } from 'react-router-dom';
+import Options from '../../components/Options';
+
 // import { toast } from 'react-toastify';
 // import history from '~/services/history';
 import { Container, Content, Pagination, Previous, Next } from './styles';
@@ -242,15 +243,9 @@ export default function Orders() {
                   {order.status.toUpperCase() || 'undefined'}
                 </div>
               </span>
-              <div
-                style={{
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                  color: '#989898',
-                  paddingBottom: '3px',
-                }}
-              >
-                {/* <Link
+              <div>
+                {/*
+                <Link
                   id="edit"
                   to="/editorder"
                   // onClick={() => editRequest(order)}
@@ -265,7 +260,7 @@ export default function Orders() {
                 >
                   delete
                 </button> */}
-                ...
+                <Options />
               </div>
             </li>
           ))}
