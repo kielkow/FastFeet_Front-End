@@ -239,58 +239,63 @@ export default function Orders() {
           <span />
         </header>
         <ul>
-          {orders.map(order => (
-            <li key={order.id}>
-              <span>#{order.id}</span>
-              <span>{order.recipient.name}</span>
-              <span>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+          {orders.length === 0 ? (
+            <span style={{ color: '#444444' }}> Any order found...</span>
+          ) : (
+            orders.map(order => (
+              <li key={order.id}>
+                <span>#{order.id}</span>
+                <span>{order.recipient.name}</span>
+                <span>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div
+                      style={{
+                        border: '0.5px solid #eee',
+                        marginRight: '5px',
+                        padding: '7px',
+                        borderRadius: '50%',
+                        fontSize: '16px',
+                        backgroundColor: `${backroundColorStatus(
+                          order.status
+                        )}`,
+                        color: `${checkColorStatus(order.status)}`,
+                      }}
+                    >
+                      {splitCourierName(order.courier.name)}
+                    </div>
+                    {order.courier.name}
+                  </div>
+                </span>
+                <span>{order.recipient.city}</span>
+                <span>{order.recipient.state}</span>
+                <span>
                   <div
                     style={{
-                      border: '0.5px solid #eee',
-                      marginRight: '5px',
-                      padding: '7px',
-                      borderRadius: '50%',
-                      fontSize: '16px',
+                      maxWidth: '95px',
+                      // border: '0.5px solid #000',
+                      borderRadius: '10px',
+                      alignItems: 'center',
+                      justifyContent: 'space-around',
+                      paddingTop: '3px',
+                      paddingBottom: '3px',
+                      paddingRight: '4px',
+                      paddingLeft: '4px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
                       backgroundColor: `${backroundColorStatus(order.status)}`,
                       color: `${checkColorStatus(order.status)}`,
                     }}
                   >
-                    {splitCourierName(order.courier.name)}
+                    <FaCircle
+                      size={10}
+                      style={{ marginRight: '2px' }}
+                      color={checkColorStatus(order.status)}
+                    />
+                    {order.status.toUpperCase() || 'undefined'}
                   </div>
-                  {order.courier.name}
-                </div>
-              </span>
-              <span>{order.recipient.city}</span>
-              <span>{order.recipient.state}</span>
-              <span>
-                <div
-                  style={{
-                    maxWidth: '95px',
-                    // border: '0.5px solid #000',
-                    borderRadius: '10px',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                    paddingTop: '3px',
-                    paddingBottom: '3px',
-                    paddingRight: '4px',
-                    paddingLeft: '4px',
-                    fontSize: '12px',
-                    fontWeight: 'bold',
-                    backgroundColor: `${backroundColorStatus(order.status)}`,
-                    color: `${checkColorStatus(order.status)}`,
-                  }}
-                >
-                  <FaCircle
-                    size={10}
-                    style={{ marginRight: '2px' }}
-                    color={checkColorStatus(order.status)}
-                  />
-                  {order.status.toUpperCase() || 'undefined'}
-                </div>
-              </span>
-              <div style={{ marginRight: '50px', boxShadow: 'none' }}>
-                {/*
+                </span>
+                <div style={{ marginRight: '50px', boxShadow: 'none' }}>
+                  {/*
                 <Link
                   id="edit"
                   to="/editorder"
@@ -306,61 +311,62 @@ export default function Orders() {
                 >
                   delete
                 </button> */}
-                <Button
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  onClick={handleClick}
-                  className={classes.root}
-                >
-                  ...
-                </Button>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>
-                    <MdVisibility
-                      color="#7d40e7"
-                      size={18}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginRight: '10px',
-                      }}
-                    />
-                    <span>See</span>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <MdEdit
-                      color="#7d40e7"
-                      size={18}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginRight: '10px',
-                      }}
-                    />
-                    <span>Edit</span>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <MdDelete
-                      color="#de3b3b"
-                      size={18}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginRight: '10px',
-                      }}
-                    />
-                    <span>Delete</span>
-                  </MenuItem>
-                </Menu>
-              </div>
-            </li>
-          ))}
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                    className={classes.root}
+                  >
+                    ...
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>
+                      <MdVisibility
+                        color="#7d40e7"
+                        size={18}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <span>See</span>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <MdEdit
+                        color="#7d40e7"
+                        size={18}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <span>Edit</span>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <MdDelete
+                        color="#de3b3b"
+                        size={18}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <span>Delete</span>
+                    </MenuItem>
+                  </Menu>
+                </div>
+              </li>
+            ))
+          )}
         </ul>
       </Content>
       <Pagination>

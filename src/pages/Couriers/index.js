@@ -236,30 +236,33 @@ export default function Couriers() {
           <span />
         </header>
         <ul>
-          {couriers.map(courier => (
-            <li key={courier.id}>
-              <span>#{courier.id}</span>
-              <span>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <div
-                    style={{
-                      border: '0.5px solid #eee',
-                      marginRight: '5px',
-                      padding: '7px',
-                      borderRadius: '50%',
-                      fontSize: '16px',
-                      backgroundColor: `${backroundColorStatus('withdrawn')}`,
-                      color: `${checkColorStatus('withdrawn')}`,
-                    }}
-                  >
-                    {splitCourierName(courier.name)}
+          {couriers.length === 0 ? (
+            <span style={{ color: '#444444' }}> Any courier found...</span>
+          ) : (
+            couriers.map(courier => (
+              <li key={courier.id}>
+                <span>#{courier.id}</span>
+                <span>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div
+                      style={{
+                        border: '0.5px solid #eee',
+                        marginRight: '5px',
+                        padding: '7px',
+                        borderRadius: '50%',
+                        fontSize: '16px',
+                        backgroundColor: `${backroundColorStatus('withdrawn')}`,
+                        color: `${checkColorStatus('withdrawn')}`,
+                      }}
+                    >
+                      {splitCourierName(courier.name)}
+                    </div>
                   </div>
-                </div>
-              </span>
-              <span>{courier.name}</span>
-              <span>{courier.email}</span>
-              <div style={{ marginRight: '50px', boxShadow: 'none' }}>
-                {/*
+                </span>
+                <span>{courier.name}</span>
+                <span>{courier.email}</span>
+                <div style={{ marginRight: '50px', boxShadow: 'none' }}>
+                  {/*
                 <Link
                   id="edit"
                   to="/editcourier"
@@ -275,49 +278,50 @@ export default function Couriers() {
                 >
                   delete
                 </button> */}
-                <Button
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  onClick={handleClick}
-                  className={classes.root}
-                >
-                  ...
-                </Button>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>
-                    <MdEdit
-                      color="#7d40e7"
-                      size={18}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginRight: '10px',
-                      }}
-                    />
-                    <span>Edit</span>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <MdDelete
-                      color="#de3b3b"
-                      size={18}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginRight: '10px',
-                      }}
-                    />
-                    <span>Delete</span>
-                  </MenuItem>
-                </Menu>
-              </div>
-            </li>
-          ))}
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                    className={classes.root}
+                  >
+                    ...
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>
+                      <MdEdit
+                        color="#7d40e7"
+                        size={18}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <span>Edit</span>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <MdDelete
+                        color="#de3b3b"
+                        size={18}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <span>Delete</span>
+                    </MenuItem>
+                  </Menu>
+                </div>
+              </li>
+            ))
+          )}
         </ul>
       </Content>
       <Pagination>
