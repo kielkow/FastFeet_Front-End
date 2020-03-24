@@ -244,19 +244,34 @@ export default function Couriers() {
                 <span>#{courier.id}</span>
                 <span>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div
-                      style={{
-                        border: '0.5px solid #eee',
-                        marginRight: '10px',
-                        padding: '12px',
-                        borderRadius: '50%',
-                        fontSize: '16px',
-                        backgroundColor: `${backroundColorStatus('withdrawn')}`,
-                        color: `${checkColorStatus('withdrawn')}`,
-                      }}
-                    >
-                      {splitCourierName(courier.name)}
-                    </div>
+                    {courier.avatar !== null ? (
+                      <img
+                        src={courier.avatar.url}
+                        alt={courier.name}
+                        style={{
+                          height: '50px',
+                          width: '50px',
+                          borderRadius: '50%',
+                          marginRight: '10px',
+                        }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          border: '0.5px solid #eee',
+                          marginRight: '10px',
+                          padding: '12px',
+                          borderRadius: '50%',
+                          fontSize: '16px',
+                          backgroundColor: `${backroundColorStatus(
+                            'withdrawn'
+                          )}`,
+                          color: `${checkColorStatus('withdrawn')}`,
+                        }}
+                      >
+                        {splitCourierName(courier.name)}
+                      </div>
+                    )}
                   </div>
                 </span>
                 <span>{courier.name}</span>
