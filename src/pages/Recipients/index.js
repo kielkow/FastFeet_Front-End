@@ -191,6 +191,14 @@ export default function Recipients() {
     setAnchorEl(null);
   };
 
+  function formAddress(street, number, city, state) {
+    let address = `${street}, `;
+    address += `${number}, `;
+    address += `${city} - `;
+    address += `${state}`;
+    return address;
+  }
+
   return (
     <Container>
       <strong>Management Recipients</strong>
@@ -225,7 +233,14 @@ export default function Recipients() {
               <li key={recipient.id}>
                 <span>#{recipient.id}</span>
                 <span>{recipient.name}</span>
-                <span>{recipient.address || 'Rua Tapirapes 87'}</span>
+                <span>
+                  {formAddress(
+                    recipient.street,
+                    recipient.number,
+                    recipient.city,
+                    recipient.state
+                  )}
+                </span>
                 <div style={{ marginRight: '50px', boxShadow: 'none' }}>
                   {/*
                 <Link
