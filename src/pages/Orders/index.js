@@ -251,8 +251,8 @@ export default function Orders() {
                     <div
                       style={{
                         border: '0.5px solid #eee',
-                        marginRight: '5px',
-                        padding: '7px',
+                        marginRight: '10px',
+                        padding: '12px',
                         borderRadius: '50%',
                         fontSize: '16px',
                         backgroundColor: `${backroundColorStatus(

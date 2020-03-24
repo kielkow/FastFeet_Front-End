@@ -97,7 +97,7 @@ export const Content = styled.div`
       }
     }
     li > span:first-child {
-      width: 20%;
+      width: 19.5%;
     }
     li > span:first-child + span {
       width: 25%;
