@@ -248,21 +248,34 @@ export default function Orders() {
                 <span>{order.recipient.name}</span>
                 <span>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div
-                      style={{
-                        border: '0.5px solid #eee',
-                        marginRight: '10px',
-                        padding: '12px',
-                        borderRadius: '50%',
-                        fontSize: '16px',
-                        backgroundColor: `${backroundColorStatus(
-                          order.status
-                        )}`,
-                        color: `${checkColorStatus(order.status)}`,
-                      }}
-                    >
-                      {splitCourierName(order.courier.name)}
-                    </div>
+                    {order.courier.avatar !== null ? (
+                      <img
+                        src={order.courier.avatar.url}
+                        alt={order.courier.name}
+                        style={{
+                          height: '50px',
+                          width: '50px',
+                          borderRadius: '50%',
+                          marginRight: '10px',
+                        }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          border: '0.5px solid #eee',
+                          marginRight: '10px',
+                          padding: '12px',
+                          borderRadius: '50%',
+                          fontSize: '16px',
+                          backgroundColor: `${backroundColorStatus(
+                            order.status
+                          )}`,
+                          color: `${checkColorStatus(order.status)}`,
+                        }}
+                      >
+                        {splitCourierName(order.courier.name)}
+                      </div>
+                    )}
                     {order.courier.name}
                   </div>
                 </span>
