@@ -278,7 +278,7 @@ export default function Problems() {
                           marginRight: '10px',
                         }}
                       />
-                      <span>Delete</span>
+                      <span>Cancel order</span>
                     </MenuItem>
                   </Menu>
                 </div>
