@@ -64,7 +64,10 @@ export const Content = styled.div`
     li {
       display: flex;
       align-items: center;
-      padding: 15px;
+      padding-right: 15px;
+      padding-left: 15px;
+      padding-top: 5px;
+      padding-bottom: 5px;
       border-radius: 4px;
       border-bottom: 1px solid #eee;
       background: #fff;
