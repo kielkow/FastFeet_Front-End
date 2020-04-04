@@ -72,35 +72,12 @@ export const Content = styled.div`
         margin-top: 15px;
       }
       color: ${lighten(0.03, '#444444')};
-      div {
-        display: flex;
-        #edit {
-          color: #4d85ee;
-        }
-        #delete {
-          color: #de3b3b;
-        }
-        button {
-          border: 0;
-          background: none;
-          & + button {
-            margin-left: 20px;
-          }
-        }
-        a {
-          border: 0;
-          background: none;
-          & + button {
-            margin-left: 20px;
-          }
-        }
-      }
     }
     li > span:first-child {
       width: 20.5%;
     }
     li > span:first-child + span {
-      width: 75%;
+      width: 70%;
     }
     li > span:first-child + span + span {
       width: 50%;
@@ -113,10 +90,7 @@ export const Content = styled.div`
     width: 22%;
   }
   header > span:first-child + span {
-    width: 80%;
-  }
-  header > span:first-child + span + span {
-    width: 7%;
+    width: 85%;
   }
 `;
 
