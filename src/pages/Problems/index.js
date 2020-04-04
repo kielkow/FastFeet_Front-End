@@ -5,12 +5,15 @@
 import React, { useState, useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 import { Input } from '@rocketseat/unform';
-import { MdAdd, MdEdit, MdDelete } from 'react-icons/md';
+import { MdAdd, MdDelete, MdVisibility } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 // import Options from '../../components/Options';
 
 // import { toast } from 'react-toastify';
@@ -21,13 +24,28 @@ import api from '~/services/api';
 
 // import * as StudentActions from '../../store/modules/student/actions';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     fontSize: '20px',
     fontWeight: 'bold',
     color: '#989898',
     padding: '0',
     width: '20px',
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    width: '500px',
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: theme.palette.background.paper,
+    border: '0',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(3, 3, 3),
+    borderRadius: '4px',
   },
 }));
 
@@ -38,6 +56,7 @@ export default function Problems() {
   const [finalPage, setFinalPage] = useState(false);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   // const dispatch = useDispatch();
 
@@ -191,6 +210,14 @@ export default function Problems() {
     setAnchorEl(null);
   };
 
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return (
     <Container>
       <strong>Management Problems</strong>
@@ -225,22 +252,6 @@ export default function Problems() {
                 <span>#{problem.order_id}</span>
                 <span>{problem.description}</span>
                 <div style={{ marginRight: '50px', boxShadow: 'none' }}>
-                  {/*
-                <Link
-                  id="edit"
-                  to="/editproblem"
-                  // onClick={() => editRequest(problem)}
-                >
-                  edit
-                </Link>
-                <button
-                  id="delete"
-                  type="button"
-                  onClick={() => deleteproblem(problem.id)}
-                  value={problem.id}
-                >
-                  delete
-                </button> */}
                   <Button
                     aria-controls="simple-menu"
                     aria-haspopup="true"
@@ -256,8 +267,8 @@ export default function Problems() {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={handleClose}>
-                      <MdEdit
+                    <MenuItem onClick={handleOpenModal}>
+                      <MdVisibility
                         color="#7d40e7"
                         size={18}
                         style={{
@@ -266,7 +277,7 @@ export default function Problems() {
                           marginRight: '10px',
                         }}
                       />
-                      <span>Edit</span>
+                      <span>See</span>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
                       <MdDelete
@@ -306,6 +317,49 @@ export default function Problems() {
           Next
         </Next>
       </Pagination>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={openModal}
+        onClose={handleCloseModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={openModal}>
+          <div className={classes.paper}>
+            <div
+              style={{
+                paddingBottom: '15px',
+              }}
+            >
+              <span style={{ fontWeight: 'bold' }}>PROBLEM DESCRIPTION</span>
+              <p
+                style={{
+                  marginTop: '10px',
+                  color: '#444',
+                  lineHeight: '20px',
+                }}
+              >
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industrs standard dummy text
+                ever since the 1500s, when an unknown printer took a galley of
+                type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum
+              </p>
+            </div>
+          </div>
+        </Fade>
+      </Modal>
     </Container>
   );
 }
