@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
+/* eslint-disable no-restricted-globals */
 /* eslint-disable no-alert */
 /* eslint-disable prefer-const */
 import React, { useState, useEffect } from 'react';
@@ -5,12 +7,12 @@ import { Input } from '@rocketseat/unform';
 import { MdAdd, MdDelete, MdVisibility } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import ModalDescription from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import 'antd/dist/antd.css';
-import { Button, Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Button, Menu, Dropdown, Modal } from 'antd';
+import { ExclamationCircleOutlined, DownOutlined } from '@ant-design/icons';
 
 import { toast } from 'react-toastify';
 import { Container, Content, Pagination, Previous, Next } from './styles';
@@ -167,18 +169,26 @@ export default function Problems() {
     setOpenModal(false);
   };
 
-  const cancelOrder = async () => {
-    const confirm = window.confirm('Do you really wish cancel this order?');
+  const { confirm } = Modal;
 
-    if (confirm) {
-      try {
-        await api.delete(`/orders/${problemSelected.order_id}`);
-        toast.info('Order canceled with success');
-        reloadProblems();
-      } catch (err) {
-        toast.error('Not possible cancel this order');
-      }
-    }
+  const cancelOrder = () => {
+    confirm({
+      title: 'Do you want to delete this order?',
+      icon: <ExclamationCircleOutlined />,
+      content:
+        'When clicked the OK button, the order will be deleted from current orders',
+      async onOk() {
+        try {
+          await api.delete(`/orders/${problemSelected.order_id}`);
+          setTimeout(Math.random() > 0.5, 1000);
+          toast.info('Order canceled with success');
+          reloadProblems();
+        } catch (err) {
+          toast.error('Not possible cancel this order');
+        }
+      },
+      onCancel() {},
+    });
   };
 
   const menu = (
@@ -252,7 +262,10 @@ export default function Problems() {
                 <span>{problem.description}</span>
                 <div style={{ marginRight: '50px' }}>
                   <Dropdown overlay={menu}>
-                    <Button onClick={() => setProblemSelected(problem)}>
+                    <Button
+                      onClick={() => setProblemSelected(problem)}
+                      onMouseOver={() => setProblemSelected(problem)}
+                    >
                       Actions <DownOutlined />
                     </Button>
                   </Dropdown>
@@ -282,7 +295,7 @@ export default function Problems() {
         </Next>
       </Pagination>
 
-      <Modal
+      <ModalDescription
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
@@ -314,7 +327,7 @@ export default function Problems() {
             </div>
           </div>
         </Fade>
-      </Modal>
+      </ModalDescription>
     </Container>
   );
 }
