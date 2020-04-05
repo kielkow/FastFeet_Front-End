@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* eslint-disable no-alert */
 /* eslint-disable prefer-const */
 import React, { useState, useEffect } from 'react';
@@ -6,8 +7,8 @@ import { Input } from '@rocketseat/unform';
 import { MdAdd, MdEdit, MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import { Button, Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Button, Menu, Dropdown, Modal } from 'antd';
+import { ExclamationCircleOutlined, DownOutlined } from '@ant-design/icons';
 
 import { toast } from 'react-toastify';
 // import history from '~/services/history';
@@ -82,22 +83,26 @@ export default function Couriers() {
     }
   }
 
-  async function deleteCourier() {
-    const confirm = window.confirm('Do you really wish delete this courier?');
+  const { confirm } = Modal;
 
-    if (confirm) {
-      try {
-        await api.delete(`/couriers/${courierSelected.id}`);
-        toast.info(
-          'Not possible delete a courier, please check the info about it'
-        );
-        reloadCouriers();
-      } catch (err) {
-        toast.error(
-          'Not possible delete a courier, please check the info about it'
-        );
-      }
-    }
+  async function deleteCourier() {
+    confirm({
+      title: 'Do you want to delete this courier?',
+      icon: <ExclamationCircleOutlined />,
+      content:
+        'When clicked the OK button, the courier will be deleted from current couriers',
+      async onOk() {
+        try {
+          await api.delete(`/couriers/${courierSelected.id}`);
+          setTimeout(Math.random() > 0.5, 1000);
+          toast.info('Courier deleted with success');
+          reloadCouriers();
+        } catch (err) {
+          toast.error('Not possible delete this courier');
+        }
+      },
+      onCancel() {},
+    });
   }
 
   const menu = (
@@ -287,7 +292,10 @@ export default function Couriers() {
                 <span>{courier.email}</span>
                 <div style={{ marginRight: '50px' }}>
                   <Dropdown overlay={menu}>
-                    <Button onClick={() => setCourierSelected(courier)}>
+                    <Button
+                      onClick={() => setCourierSelected(courier)}
+                      onMouseOver={() => setCourierSelected(courier)}
+                    >
                       Actions <DownOutlined />
                     </Button>
                   </Dropdown>
