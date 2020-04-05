@@ -103,7 +103,7 @@ export const Content = styled.div`
       width: 25%;
     }
     li > span:first-child + span + span {
-      width: 50%;
+      width: 46%;
     }
     li > span:first-child + span + span + span {
       width: 25%;
@@ -119,10 +119,7 @@ export const Content = styled.div`
     width: 25%;
   }
   header > span:first-child + span + span {
-    width: 50%;
-  }
-  header > span:first-child + span + span + span {
-    width: 7%;
+    width: 0%;
   }
 `;
 

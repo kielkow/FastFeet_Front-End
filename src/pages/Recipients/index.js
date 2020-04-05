@@ -1,19 +1,16 @@
-/* eslint-disable array-callback-return */
-/* eslint-disable prefer-const */
 /* eslint-disable no-alert */
-/* eslint-disable no-restricted-globals */
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
+/* eslint-disable prefer-const */
 import React, { useState, useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 import { Input } from '@rocketseat/unform';
 import { MdAdd, MdEdit, MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles } from '@material-ui/core/styles';
-// import Options from '../../components/Options';
+import 'antd/dist/antd.css';
+import { Button, Menu, Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 // import history from '~/services/history';
 import { Container, Content, Pagination, Previous, Next } from './styles';
 
@@ -21,23 +18,12 @@ import api from '~/services/api';
 
 // import * as StudentActions from '../../store/modules/student/actions';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    fontSize: '20px',
-    fontWeight: 'bold',
-    color: '#989898',
-    padding: '0',
-    width: '20px',
-  },
-}));
-
 export default function Recipients() {
   const [recipients, setRecipients] = useState([]);
+  const [recipientSelected, setRecipientSelected] = useState({});
   let [page, setPage] = useState(1);
   const [loadingNext, setLoadingNext] = useState(false);
   const [finalPage, setFinalPage] = useState(false);
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
   // const dispatch = useDispatch();
 
@@ -71,7 +57,6 @@ export default function Recipients() {
     loadRecipients();
   }, [page]);
 
-  /*
   async function reloadRecipients() {
     const response = await api.get('/recipients', {
       params: {
@@ -98,16 +83,15 @@ export default function Recipients() {
     }
   }
 
-  async function deleterecipient(e) {
+  async function deleteRecipient() {
     const confirm = window.confirm('Do you really wish delete this recipient?');
 
     if (confirm) {
       try {
-        await api.delete(`/recipients/${e}`);
+        await api.delete(`/recipients/${recipientSelected.id}`);
         toast.info(
           'Not possible delete a recipient, please check the info about it'
         );
-        history.push('/recipients');
         reloadRecipients();
       } catch (err) {
         toast.error(
@@ -116,7 +100,6 @@ export default function Recipients() {
       }
     }
   }
-  */
 
   /*
   function editRequest(student) {
@@ -183,14 +166,6 @@ export default function Recipients() {
     setRecipients(similarRecipients.data);
   }
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   function formAddress(street, number, city, state) {
     let address = `${street}, `;
     address += `${number}, `;
@@ -198,6 +173,42 @@ export default function Recipients() {
     address += `${state}`;
     return address;
   }
+
+  const menu = (
+    <Menu>
+      <Menu.Item
+        key="1"
+        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+      >
+        <MdEdit
+          color="#7d40e7"
+          size={18}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginRight: '10px',
+          }}
+        />
+        <span>Edit</span>
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        onClick={() => deleteRecipient()}
+      >
+        <MdDelete
+          color="#de3b3b"
+          size={18}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginRight: '10px',
+          }}
+        />
+        <span>Delete Recipient</span>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <Container>
@@ -222,7 +233,6 @@ export default function Recipients() {
           <span>ID</span>
           <span>Name</span>
           <span>Address</span>
-          <span>Actions</span>
           <span />
         </header>
         <ul>
@@ -241,63 +251,15 @@ export default function Recipients() {
                     recipient.state
                   )}
                 </span>
-                <div style={{ marginRight: '50px', boxShadow: 'none' }}>
-                  {/*
-                <Link
-                  id="edit"
-                  to="/editrecipient"
-                  // onClick={() => editRequest(recipient)}
-                >
-                  edit
-                </Link>
-                <button
-                  id="delete"
-                  type="button"
-                  onClick={() => deleterecipient(recipient.id)}
-                  value={recipient.id}
-                >
-                  delete
-                </button> */}
-                  <Button
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                    onClick={handleClick}
-                    className={classes.root}
-                  >
-                    ...
-                  </Button>
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem onClick={handleClose}>
-                      <MdEdit
-                        color="#7d40e7"
-                        size={18}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginRight: '10px',
-                        }}
-                      />
-                      <span>Edit</span>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <MdDelete
-                        color="#de3b3b"
-                        size={18}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginRight: '10px',
-                        }}
-                      />
-                      <span>Delete</span>
-                    </MenuItem>
-                  </Menu>
+                <div style={{ marginRight: '50px' }}>
+                  <Dropdown overlay={menu}>
+                    <Button
+                      onClick={() => setRecipientSelected(recipient)}
+                      onMouseOver={() => setRecipientSelected(recipient)}
+                    >
+                      Actions <DownOutlined />
+                    </Button>
+                  </Dropdown>
                 </div>
               </li>
             ))
