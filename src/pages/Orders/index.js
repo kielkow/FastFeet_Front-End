@@ -9,16 +9,18 @@ import { Input } from '@rocketseat/unform';
 import { MdAdd, MdVisibility, MdEdit, MdDelete } from 'react-icons/md';
 import { FaCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-// import Options from '../../components/Options';
+import 'antd/dist/antd.css';
+import { Button, Menu, Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
-// import { toast } from 'react-toastify';
+import { parseISO, format } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
+
+import { toast } from 'react-toastify';
 // import history from '~/services/history';
 import { Container, Content, Pagination, Previous, Next } from './styles';
 
@@ -27,13 +29,6 @@ import api from '~/services/api';
 // import * as StudentActions from '../../store/modules/student/actions';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    fontSize: '20px',
-    fontWeight: 'bold',
-    color: '#989898',
-    padding: '0',
-    width: '20px',
-  },
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -53,12 +48,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
-  // const [orderSelected, setOrderSelected] = useState();
+  const [orderSelected, setOrderSelected] = useState({});
   let [page, setPage] = useState(1);
   const [loadingNext, setLoadingNext] = useState(false);
   const [finalPage, setFinalPage] = useState(false);
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = useState(false);
 
   // const dispatch = useDispatch();
@@ -93,7 +87,6 @@ export default function Orders() {
     loadOrders();
   }, [page]);
 
-  /*
   async function reloadOrders() {
     const response = await api.get('/orders', {
       params: {
@@ -120,16 +113,13 @@ export default function Orders() {
     }
   }
 
-  async function deleteOrder(e) {
+  async function deleteOrder() {
     const confirm = window.confirm('Do you really wish delete this order?');
 
     if (confirm) {
       try {
-        await api.delete(`/orders/${e}`);
-        toast.info(
-          'Not possible delete a order, please check the info about it'
-        );
-        history.push('/orders');
+        await api.delete(`/orders/${orderSelected.id}`);
+        toast.info('Order deleted with sucess');
         reloadOrders();
       } catch (err) {
         toast.error(
@@ -138,7 +128,6 @@ export default function Orders() {
       }
     }
   }
-  */
 
   /*
   function editRequest(student) {
@@ -222,14 +211,6 @@ export default function Orders() {
     return `${splitName[0].charAt(0)}${splitName[1].charAt(0)}`;
   }
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -237,6 +218,59 @@ export default function Orders() {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
+  const menu = (
+    <Menu>
+      <Menu.Item
+        key="1"
+        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        onClick={() => handleOpenModal()}
+      >
+        <MdVisibility
+          color="#7d40e7"
+          size={18}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginRight: '10px',
+          }}
+        />
+        <span>See</span>
+      </Menu.Item>
+      <Menu.Item
+        key="1"
+        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        onClick={() => handleOpenModal()}
+      >
+        <MdEdit
+          color="#7d40e7"
+          size={18}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginRight: '10px',
+          }}
+        />
+        <span>Edit</span>
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        onClick={() => deleteOrder()}
+      >
+        <MdDelete
+          color="#de3b3b"
+          size={18}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginRight: '10px',
+          }}
+        />
+        <span>Cancel Order</span>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <Container>
@@ -264,7 +298,6 @@ export default function Orders() {
           <span>City</span>
           <span>State</span>
           <span>Status</span>
-          <span>Actions</span>
           <span />
         </header>
         <ul>
@@ -313,8 +346,7 @@ export default function Orders() {
                 <span>
                   <div
                     style={{
-                      maxWidth: '95px',
-                      // border: '0.5px solid #000',
+                      maxWidth: '100px',
                       borderRadius: '10px',
                       alignItems: 'center',
                       justifyContent: 'space-around',
@@ -336,75 +368,15 @@ export default function Orders() {
                     {order.status.toUpperCase() || 'undefined'}
                   </div>
                 </span>
-                <div style={{ marginRight: '50px', boxShadow: 'none' }}>
-                  {/*
-                <Link
-                  id="edit"
-                  to="/editorder"
-                  // onClick={() => editRequest(order)}
-                >
-                  edit
-                </Link>
-                <button
-                  id="delete"
-                  type="button"
-                  onClick={() => deleteOrder(order.id)}
-                  value={order.id}
-                >
-                  delete
-                </button> */}
-                  <Button
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                    onClick={handleClick}
-                    className={classes.root}
-                  >
-                    ...
-                  </Button>
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem onClick={handleOpenModal}>
-                      <MdVisibility
-                        color="#7d40e7"
-                        size={18}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginRight: '10px',
-                        }}
-                      />
-                      <span>See</span>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <MdEdit
-                        color="#7d40e7"
-                        size={18}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginRight: '10px',
-                        }}
-                      />
-                      <span>Edit</span>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <MdDelete
-                        color="#de3b3b"
-                        size={18}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginRight: '10px',
-                        }}
-                      />
-                      <span>Delete</span>
-                    </MenuItem>
-                  </Menu>
+                <div style={{ marginRight: '50px' }}>
+                  <Dropdown overlay={menu}>
+                    <Button
+                      onClick={() => setOrderSelected(order)}
+                      onMouseOver={() => setOrderSelected(order)}
+                    >
+                      Actions <DownOutlined />
+                    </Button>
+                  </Dropdown>
                 </div>
               </li>
             ))
@@ -459,7 +431,11 @@ export default function Orders() {
                   lineHeight: '20px',
                 }}
               >
-                Wall Street, 87
+                {`${
+                  orderSelected.recipient ? orderSelected.recipient.street : ''
+                }, ${
+                  orderSelected.recipient ? orderSelected.recipient.number : ''
+                }`}
               </p>
               <p
                 style={{
@@ -468,7 +444,11 @@ export default function Orders() {
                   lineHeight: '20px',
                 }}
               >
-                Diadema - SP
+                {`${
+                  orderSelected.recipient ? orderSelected.recipient.city : ''
+                } - ${
+                  orderSelected.recipient ? orderSelected.recipient.state : ''
+                }`}
               </p>
               <p
                 style={{
@@ -477,7 +457,9 @@ export default function Orders() {
                   lineHeight: '20px',
                 }}
               >
-                53453453453
+                {`${
+                  orderSelected.recipient ? orderSelected.recipient.cep : ''
+                }`}
               </p>
             </div>
 
@@ -494,9 +476,8 @@ export default function Orders() {
               <span
                 style={{
                   fontWeight: 'bold',
-                  marginTop: '10px',
+                  marginTop: '15px',
                   display: 'flex',
-                  alignItems: 'center',
                   flexDirection: 'row',
                 }}
               >
@@ -505,20 +486,24 @@ export default function Orders() {
                   style={{
                     fontWeight: 'normal',
                     color: '#444',
-                    wordSpacing: '5px',
-                    lineHeight: '20px',
                     marginLeft: '5px',
                   }}
                 >
-                  03/06/2020
+                  {orderSelected.start_date
+                    ? `${format(
+                        zonedTimeToUtc(
+                          parseISO(orderSelected.start_date),
+                          'America/Sao_Paulo'
+                        ),
+                        'dd-MM-yyyy hh:mm'
+                      ).replace(/-/g, '/')}h` || 'Uninformed'
+                    : ''}
                 </p>
               </span>
               <span
                 style={{
                   fontWeight: 'bold',
-                  marginTop: '10px',
                   display: 'flex',
-                  alignItems: 'center',
                   flexDirection: 'row',
                 }}
               >
@@ -527,12 +512,18 @@ export default function Orders() {
                   style={{
                     fontWeight: 'normal',
                     color: '#444',
-                    wordSpacing: '5px',
-                    lineHeight: '20px',
                     marginLeft: '5px',
                   }}
                 >
-                  03/06/2020
+                  {orderSelected.end_date
+                    ? `${format(
+                        zonedTimeToUtc(
+                          parseISO(orderSelected.end_date),
+                          'America/Sao_Paulo'
+                        ),
+                        'dd-MM-yyyy hh:mm'
+                      ).replace(/-/g, '/')}h` || 'Uninformed'
+                    : ''}
                 </p>
               </span>
             </div>

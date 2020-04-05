@@ -72,6 +72,22 @@ export const Content = styled.div`
         margin-top: 15px;
       }
       color: ${lighten(0.03, '#444444')};
+      div {
+        button {
+          border: 0;
+          background: none;
+          & + button {
+            margin-left: 20px;
+          }
+        }
+        a {
+          border: 0;
+          background: none;
+          & + button {
+            margin-left: 20px;
+          }
+        }
+      }
     }
     li > span:first-child {
       width: 20.5%;

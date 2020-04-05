@@ -76,13 +76,6 @@ export const Content = styled.div`
       }
       color: ${lighten(0.03, '#444444')};
       div {
-        display: flex;
-        #edit {
-          color: #4d85ee;
-        }
-        #delete {
-          color: #de3b3b;
-        }
         button {
           border: 0;
           background: none;
@@ -115,7 +108,7 @@ export const Content = styled.div`
       width: 15%;
     }
     li > span:first-child + span + span + span + span + span {
-      width: 24%;
+      width: 20%;
     }
     li > div {
       width: 0%;
@@ -128,7 +121,7 @@ export const Content = styled.div`
     width: 15%;
   }
   header > span:first-child + span + span {
-    width: 18%;
+    width: 18.3%;
   }
   header > span:first-child + span + span + span {
     width: 12%;

@@ -12,6 +12,8 @@
     "axios": "^0.19.2",
     "babel-plugin-root-import": "^6.4.1",
     "customize-cra": "^0.9.1",
+    "date-fns": "^2.11.1",
+    "date-fns-tz": "^1.0.10",
     "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
     "history": "^4.10.1",
     "immer": "^6.0.1",
