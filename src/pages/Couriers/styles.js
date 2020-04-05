@@ -106,7 +106,7 @@ export const Content = styled.div`
       width: 25%;
     }
     li > span:first-child + span + span + span {
-      width: 25%;
+      width: 22%;
     }
     li > span:first-child + span + span + span + span {
       width: 25%;
@@ -125,7 +125,7 @@ export const Content = styled.div`
     width: 25%;
   }
   header > span:first-child + span + span + span {
-    width: 25%;
+    width: 25.3%;
   }
   header > span:first-child + span + span + span + span {
     width: 7%;
