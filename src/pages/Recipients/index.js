@@ -7,8 +7,8 @@ import { Input } from '@rocketseat/unform';
 import { MdAdd, MdEdit, MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import { Button, Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Button, Menu, Dropdown, Modal } from 'antd';
+import { ExclamationCircleOutlined, DownOutlined } from '@ant-design/icons';
 
 import { toast } from 'react-toastify';
 // import history from '~/services/history';
@@ -83,22 +83,26 @@ export default function Recipients() {
     }
   }
 
-  async function deleteRecipient() {
-    const confirm = window.confirm('Do you really wish delete this recipient?');
+  const { confirm } = Modal;
 
-    if (confirm) {
-      try {
-        await api.delete(`/recipients/${recipientSelected.id}`);
-        toast.info(
-          'Not possible delete a recipient, please check the info about it'
-        );
-        reloadRecipients();
-      } catch (err) {
-        toast.error(
-          'Not possible delete a recipient, please check the info about it'
-        );
-      }
-    }
+  async function deleteRecipient() {
+    confirm({
+      title: 'Do you want to delete this recipient?',
+      icon: <ExclamationCircleOutlined />,
+      content:
+        'When clicked the OK button, the recipient will be deleted from current recipients',
+      async onOk() {
+        try {
+          await api.delete(`/recipients/${recipientSelected.id}`);
+          setTimeout(Math.random() > 0.5, 1000);
+          toast.info('Recipient deleted with success');
+          reloadRecipients();
+        } catch (err) {
+          toast.error('Not possible delete this recipient');
+        }
+      },
+      onCancel() {},
+    });
   }
 
   /*
