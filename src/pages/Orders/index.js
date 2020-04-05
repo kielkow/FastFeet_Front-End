@@ -10,12 +10,12 @@ import { MdAdd, MdVisibility, MdEdit, MdDelete } from 'react-icons/md';
 import { FaCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import ModalDescription from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import 'antd/dist/antd.css';
-import { Button, Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Button, Menu, Dropdown, Modal } from 'antd';
+import { ExclamationCircleOutlined, DownOutlined } from '@ant-design/icons';
 
 import { parseISO, format } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
@@ -113,20 +113,26 @@ export default function Orders() {
     }
   }
 
-  async function deleteOrder() {
-    const confirm = window.confirm('Do you really wish delete this order?');
+  const { confirm } = Modal;
 
-    if (confirm) {
-      try {
-        await api.delete(`/orders/${orderSelected.id}`);
-        toast.info('Order deleted with sucess');
-        reloadOrders();
-      } catch (err) {
-        toast.error(
-          'Not possible delete a order, please check the info about it'
-        );
-      }
-    }
+  async function deleteOrder() {
+    confirm({
+      title: 'Do you want to delete this order?',
+      icon: <ExclamationCircleOutlined />,
+      content:
+        'When clicked the OK button, the order will be deleted from current orders',
+      async onOk() {
+        try {
+          await api.delete(`/orders/${orderSelected.id}`);
+          setTimeout(Math.random() > 0.5, 1000);
+          toast.info('Order canceled with success');
+          reloadOrders();
+        } catch (err) {
+          toast.error('Not possible cancel this order');
+        }
+      },
+      onCancel() {},
+    });
   }
 
   /*
@@ -403,7 +409,7 @@ export default function Orders() {
         </Next>
       </Pagination>
 
-      <Modal
+      <ModalDescription
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
@@ -555,7 +561,7 @@ export default function Orders() {
             </div>
           </div>
         </Fade>
-      </Modal>
+      </ModalDescription>
     </Container>
   );
 }
