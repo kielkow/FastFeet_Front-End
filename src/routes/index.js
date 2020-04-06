@@ -12,6 +12,8 @@ import Orders from '../pages/Orders';
 import RegisterOrder from '../pages/Orders/Register';
 
 import Couriers from '../pages/Couriers';
+import EditCourier from '../pages/Couriers/Edit';
+
 import Recipients from '../pages/Recipients';
 import Problems from '../pages/Problems';
 
@@ -27,6 +29,8 @@ export default function Routes() {
       <Route path="/registerorder" component={RegisterOrder} isPrivate />
 
       <Route path="/couriers" component={Couriers} isPrivate />
+      <Route path="/editcourier" component={EditCourier} isPrivate />
+
       <Route path="/recipients" component={Recipients} isPrivate />
       <Route path="/problems" component={Problems} isPrivate />
     </Switch>

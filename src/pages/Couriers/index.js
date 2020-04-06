@@ -2,7 +2,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable prefer-const */
 import React, { useState, useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Input } from '@rocketseat/unform';
 import { MdAdd, MdEdit, MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -11,12 +11,12 @@ import { Button, Menu, Dropdown, Modal } from 'antd';
 import { ExclamationCircleOutlined, DownOutlined } from '@ant-design/icons';
 
 import { toast } from 'react-toastify';
-// import history from '~/services/history';
+import history from '~/services/history';
 import { Container, Content, Pagination, Previous, Next } from './styles';
 
 import api from '~/services/api';
 
-// import * as StudentActions from '../../store/modules/student/actions';
+import * as CourierActions from '../../store/modules/courier/actions';
 
 export default function Couriers() {
   const [couriers, setCouriers] = useState([]);
@@ -25,7 +25,7 @@ export default function Couriers() {
   const [loadingNext, setLoadingNext] = useState(false);
   const [finalPage, setFinalPage] = useState(false);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadCouriers() {
@@ -105,11 +105,17 @@ export default function Couriers() {
     });
   }
 
+  function editCourier() {
+    dispatch(CourierActions.updateCourierRequest(courierSelected));
+    history.push('/editcourier');
+  }
+
   const menu = (
     <Menu>
       <Menu.Item
         key="1"
         style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        onClick={() => editCourier()}
       >
         <MdEdit
           color="#7d40e7"
@@ -140,12 +146,6 @@ export default function Couriers() {
       </Menu.Item>
     </Menu>
   );
-
-  /*
-  function editRequest(student) {
-    dispatch(StudentActions.updateStudentRequest(student));
-  }
-  */
 
   async function next() {
     setLoadingNext(true);
