@@ -1,12 +1,12 @@
+/* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* eslint-disable array-callback-return */
 /* eslint-disable prefer-const */
 /* eslint-disable no-alert */
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
 import { Input } from '@rocketseat/unform';
-import { MdAdd, MdVisibility, MdEdit, MdDelete } from 'react-icons/md';
+import { MdAdd, MdVisibility, MdDoneAll, MdDelete } from 'react-icons/md';
 import { FaCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,12 +21,9 @@ import { parseISO, format } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
 import { toast } from 'react-toastify';
-// import history from '~/services/history';
 import { Container, Content, Pagination, Previous, Next } from './styles';
 
 import api from '~/services/api';
-
-// import * as StudentActions from '../../store/modules/student/actions';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -54,8 +51,6 @@ export default function Orders() {
   const [finalPage, setFinalPage] = useState(false);
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
-
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadOrders() {
@@ -135,11 +130,28 @@ export default function Orders() {
     });
   }
 
-  /*
-  function editRequest(student) {
-    dispatch(StudentActions.updateStudentRequest(student));
+  async function updateOrder() {
+    if (orderSelected.status !== 'withdrawn')
+      return toast.info('Not possible finish this order');
+
+    confirm({
+      title: 'Do you want to finish this order?',
+      icon: <ExclamationCircleOutlined />,
+      content:
+        'When clicked the OK button, the order will be finished from current orders',
+      async onOk() {
+        try {
+          await api.put(`/orders/${orderSelected.id}`);
+          setTimeout(Math.random() > 0.5, 1000);
+          toast.success('Order finish with success!');
+          reloadOrders();
+        } catch (err) {
+          toast.error('Not possible update this order');
+        }
+      },
+      onCancel() {},
+    });
   }
-  */
 
   async function next() {
     setLoadingNext(true);
@@ -244,11 +256,11 @@ export default function Orders() {
         <span>See</span>
       </Menu.Item>
       <Menu.Item
-        key="1"
+        key="2"
         style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-        onClick={() => handleOpenModal()}
+        onClick={() => updateOrder()}
       >
-        <MdEdit
+        <MdDoneAll
           color="#7d40e7"
           size={18}
           style={{
@@ -257,10 +269,10 @@ export default function Orders() {
             marginRight: '10px',
           }}
         />
-        <span>Edit</span>
+        <span>Done</span>
       </Menu.Item>
       <Menu.Item
-        key="2"
+        key="3"
         style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
         onClick={() => deleteOrder()}
       >
