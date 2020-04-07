@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Input } from '@rocketseat/unform';
-import { MdArrowBack, MdSave } from 'react-icons/md';
+import { IoIosArrowBack, IoMdCheckmark } from 'react-icons/io';
 
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
@@ -66,11 +66,11 @@ export default function EditCourier() {
         <strong>Edit Courier</strong>
         <div>
           <Link type="button" to="/couriers">
-            <MdArrowBack color="#fff" size={18} />
+            <IoIosArrowBack color="#fff" size={18} />
             <span>Back</span>
           </Link>
           <button type="button" onClick={updateCourier}>
-            <MdSave color="#fff" size={18} />
+            <IoMdCheckmark color="#fff" size={18} />
             <span>Save</span>
           </button>
         </div>
