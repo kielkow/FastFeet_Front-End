@@ -1,103 +1,68 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable consistent-return */
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Input } from '@rocketseat/unform';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input, Form } from '@rocketseat/unform';
 import { IoIosArrowBack, IoMdCheckmark } from 'react-icons/io';
 
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-import api from '~/services/api';
-import history from '~/services/history';
+import { updateCourierRequest } from '~/store/modules/courier/actions';
 
 import AvatarInput from './AvatarInput';
 
-import { Container, Content } from './styles';
+import { Container } from './styles';
 
 export default function EditCourier() {
+  const dispatch = useDispatch();
+
   const courier = useSelector(state => state.courier.courier);
 
-  const [courierEdit, setCourierEdit] = useState(courier);
-
-  function handleChangeName(e) {
-    setCourierEdit({
-      id: courierEdit.id,
-      name: e.target.value,
-      avatar_id: courierEdit.avatar_id,
-      email: courierEdit.email,
-    });
-  }
-
-  function handleChangeEmail(e) {
-    setCourierEdit({
-      id: courierEdit.id,
-      name: courierEdit.name,
-      avatar_id: courierEdit.avatar_id,
-      email: e.target.value,
-    });
-  }
-
-  async function updateCourier() {
-    const updatedCourier = {
-      name: courierEdit.name,
-      avatar_id: courierEdit.avatar_id,
-      email: courierEdit.email,
-    };
-    const arrayCourier = Object.values(updatedCourier);
+  function handleSubmit(data) {
+    const arrayCourier = Object.values(data);
     let isNull = false;
     arrayCourier.forEach(propCourier => {
       if (propCourier === null || propCourier === '' || propCourier === 0)
         isNull = true;
     });
 
-    if (isNull) return toast.error('Please check courier´s information');
+    if (isNull) return toast.info('Please check courier´s information');
 
-    try {
-      await api.put(`/couriers/${courierEdit.id}`, updatedCourier);
-      toast.success('Courier updated with success!');
-      history.push('/couriers');
-    } catch (err) {
-      toast.error('Not possible update this courier');
-    }
+    data = { id: courier.id, ...data };
+
+    dispatch(updateCourierRequest(data));
   }
 
   return (
     <Container>
-      <header>
-        <strong>Edit Courier</strong>
-        <div>
-          <Link type="button" to="/couriers">
-            <IoIosArrowBack color="#fff" size={18} />
-            <span>Back</span>
-          </Link>
-          <button type="button" onClick={updateCourier}>
-            <IoMdCheckmark color="#fff" size={18} />
-            <span>Save</span>
-          </button>
-        </div>
-      </header>
-      <Content>
-        <AvatarInput name="avatar_id" />
+      <Form initialData={courier} onSubmit={handleSubmit}>
+        <header>
+          <strong>Edit Courier</strong>
+          <div>
+            <Link type="button" to="/couriers">
+              <IoIosArrowBack color="#fff" size={18} />
+              <span>Back</span>
+            </Link>
+            <button type="submit">
+              <IoMdCheckmark color="#fff" size={18} />
+              <span>Save</span>
+            </button>
+          </div>
+        </header>
 
-        <div>
-          <span>Name</span>
-          <Input
-            name="name"
-            placeholder="Courier name..."
-            value={courierEdit.name}
-            onChange={handleChangeName}
-          />
+        <div id="content">
+          <AvatarInput name="avatar_id" />
+
+          <div>
+            <span>Name</span>
+            <Input name="name" placeholder="Courier name..." />
+          </div>
+          <div>
+            <span>E-mail</span>
+            <Input name="email" type="email" placeholder="Courier e-mail..." />
+          </div>
         </div>
-        <div>
-          <span>E-mail</span>
-          <Input
-            name="email"
-            type="email"
-            placeholder="Courier e-mail..."
-            value={courierEdit.email}
-            onChange={handleChangeEmail}
-          />
-        </div>
-      </Content>
+      </Form>
     </Container>
   );
 }

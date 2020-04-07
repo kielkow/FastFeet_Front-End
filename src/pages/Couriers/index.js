@@ -106,7 +106,7 @@ export default function Couriers() {
   }
 
   function editCourier() {
-    dispatch(CourierActions.updateCourierRequest(courierSelected));
+    dispatch(CourierActions.getCourierData(courierSelected));
     history.push('/editcourier');
   }
 

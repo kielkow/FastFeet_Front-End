@@ -8,7 +8,11 @@ const INITIAL_STATE = {
 export default function courier(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@courier/UPDATE_COURIER_REQUEST': {
+      case '@courier/GET_COURIER_DATA': {
+        draft.courier = action.payload.courier;
+        break;
+      }
+      case '@courier/UPDATE_COURIER_SUCCESS': {
         draft.courier = action.payload.courier;
         break;
       }
