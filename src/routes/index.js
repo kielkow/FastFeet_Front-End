@@ -16,6 +16,8 @@ import EditCourier from '../pages/Couriers/Edit';
 import RegisterCourier from '../pages/Couriers/Register';
 
 import Recipients from '../pages/Recipients';
+import RegisterRecipient from '../pages/Recipients/Register';
+
 import Problems from '../pages/Problems';
 
 export default function Routes() {
@@ -34,6 +36,12 @@ export default function Routes() {
       <Route path="/editcourier" component={EditCourier} isPrivate />
 
       <Route path="/recipients" component={Recipients} isPrivate />
+      <Route
+        path="/registerrecipient"
+        component={RegisterRecipient}
+        isPrivate
+      />
+
       <Route path="/problems" component={Problems} isPrivate />
     </Switch>
   );
