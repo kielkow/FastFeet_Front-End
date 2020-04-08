@@ -17,6 +17,7 @@ import RegisterCourier from '../pages/Couriers/Register';
 
 import Recipients from '../pages/Recipients';
 import RegisterRecipient from '../pages/Recipients/Register';
+import EditRecipient from '../pages/Recipients/Edit';
 
 import Problems from '../pages/Problems';
 
@@ -41,6 +42,7 @@ export default function Routes() {
         component={RegisterRecipient}
         isPrivate
       />
+      <Route path="/editrecipient" component={EditRecipient} isPrivate />
 
       <Route path="/problems" component={Problems} isPrivate />
     </Switch>

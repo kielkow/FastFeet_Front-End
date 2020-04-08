@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* eslint-disable prefer-const */
 import React, { useState, useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Input } from '@rocketseat/unform';
 import { MdAdd, MdEdit, MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -11,12 +11,12 @@ import { Button, Menu, Dropdown, Modal } from 'antd';
 import { ExclamationCircleOutlined, DownOutlined } from '@ant-design/icons';
 
 import { toast } from 'react-toastify';
-// import history from '~/services/history';
+import history from '~/services/history';
 import { Container, Content, Pagination, Previous, Next } from './styles';
 
 import api from '~/services/api';
 
-// import * as StudentActions from '../../store/modules/student/actions';
+import * as RecipientActions from '../../store/modules/recipient/actions';
 
 export default function Recipients() {
   const [recipients, setRecipients] = useState([]);
@@ -25,7 +25,7 @@ export default function Recipients() {
   const [loadingNext, setLoadingNext] = useState(false);
   const [finalPage, setFinalPage] = useState(false);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadRecipients() {
@@ -105,11 +105,10 @@ export default function Recipients() {
     });
   }
 
-  /*
-  function editRequest(student) {
-    dispatch(StudentActions.updateStudentRequest(student));
+  function editRecipient() {
+    dispatch(RecipientActions.getRecipientData(recipientSelected));
+    history.push('/editrecipient');
   }
-  */
 
   async function next() {
     setLoadingNext(true);
@@ -183,6 +182,7 @@ export default function Recipients() {
       <Menu.Item
         key="1"
         style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        onClick={() => editRecipient()}
       >
         <MdEdit
           color="#7d40e7"
