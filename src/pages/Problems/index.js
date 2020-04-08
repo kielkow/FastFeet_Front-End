@@ -4,8 +4,7 @@
 /* eslint-disable prefer-const */
 import React, { useState, useEffect } from 'react';
 import { Input } from '@rocketseat/unform';
-import { MdAdd, MdDelete, MdVisibility } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { MdDelete, MdVisibility } from 'react-icons/md';
 import { makeStyles } from '@material-ui/core/styles';
 import ModalDescription from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -239,12 +238,6 @@ export default function Problems() {
           style={{ fontFamily: 'Arial, FontAwesome' }}
           onChange={searchproblem}
         />
-        <div>
-          <Link to="/registerproblem">
-            <MdAdd color="#fff" size={18} />
-            <span>Register</span>
-          </Link>
-        </div>
       </header>
       <Content>
         <header>
