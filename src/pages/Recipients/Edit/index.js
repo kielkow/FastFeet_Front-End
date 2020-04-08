@@ -26,6 +26,8 @@ export default function EditRecipient() {
 
     if (isNull) return toast.info('Please check recipient´s information');
 
+    data = { id: recipient.id, ...data };
+
     dispatch(updateRecipientRequest(data));
   }
 
