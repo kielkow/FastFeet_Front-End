@@ -7,6 +7,8 @@ import { IoIosArrowBack, IoMdCheckmark } from 'react-icons/io';
 
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import AvatarInput from './AvatarInput';
+
 import { updateRecipientRequest } from '~/store/modules/recipient/actions';
 
 import { Container } from './styles';
@@ -20,7 +22,12 @@ export default function EditRecipient() {
     const arrayRecipient = Object.values(data);
     let isNull = false;
     arrayRecipient.forEach(propRecipient => {
-      if (propRecipient === null || propRecipient === '' || propRecipient === 0)
+      if (
+        propRecipient === null ||
+        propRecipient === '' ||
+        propRecipient === 0 ||
+        propRecipient === undefined
+      )
         isNull = true;
     });
 
@@ -47,6 +54,8 @@ export default function EditRecipient() {
             </button>
           </div>
         </header>
+
+        <AvatarInput name="signature_id" />
 
         <div id="content">
           <div id="child-content">

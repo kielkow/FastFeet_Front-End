@@ -12,6 +12,7 @@ export function* updateRecipient({ payload }) {
     const {
       id,
       name,
+      signature_id,
       street,
       number,
       details,
@@ -22,6 +23,7 @@ export function* updateRecipient({ payload }) {
 
     const recipient = {
       name,
+      signature_id,
       street,
       number,
       details,

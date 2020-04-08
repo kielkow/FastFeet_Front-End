@@ -63,7 +63,6 @@ export const Container = styled.div`
       background: #fff;
       border-radius: 4px;
       padding: 20px;
-      margin-top: 20px;
 
       #child-content {
         display: flex;

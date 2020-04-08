@@ -22,7 +22,12 @@ export default function EditCourier() {
     const arrayCourier = Object.values(data);
     let isNull = false;
     arrayCourier.forEach(propCourier => {
-      if (propCourier === null || propCourier === '' || propCourier === 0)
+      if (
+        propCourier === null ||
+        propCourier === '' ||
+        propCourier === 0 ||
+        propCourier === undefined
+      )
         isNull = true;
     });
 
