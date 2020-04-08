@@ -499,7 +499,6 @@ export default function Orders() {
               style={{
                 display: 'flex',
                 borderBottom: '0.5px solid #796b6bee',
-                paddingBottom: '15px',
                 marginTop: '15px',
                 flexDirection: 'column',
               }}
@@ -551,6 +550,34 @@ export default function Orders() {
                     ? `${format(
                         zonedTimeToUtc(
                           parseISO(orderSelected.end_date),
+                          'America/Sao_Paulo'
+                        ),
+                        'dd-MM-yyyy hh:mm'
+                      ).replace(/-/g, '/')}h` || 'Uninformed'
+                    : ''}
+                </p>
+              </span>
+              <span
+                style={{
+                  fontWeight: 'bold',
+                  marginTop: '15px',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  marginBottom: '0px',
+                }}
+              >
+                Canceled at:
+                <p
+                  style={{
+                    fontWeight: 'normal',
+                    color: '#444',
+                    marginLeft: '5px',
+                  }}
+                >
+                  {orderSelected.canceled_at
+                    ? `${format(
+                        zonedTimeToUtc(
+                          parseISO(orderSelected.canceled_at),
                           'America/Sao_Paulo'
                         ),
                         'dd-MM-yyyy hh:mm'
