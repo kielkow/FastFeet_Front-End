@@ -200,13 +200,17 @@ export default function Orders() {
 
   async function searchOrder(e) {
     if (e.target.value === '' || e.target.value === null) {
-      const originalOrders = await api.get('/orders');
+      const originalOrders = await api.get('/orders', {
+        params: {
+          page,
+        },
+      });
       setOrders(originalOrders.data);
       return;
     }
     const similarOrders = await api.get('/orders', {
       params: {
-        name: e.target.value,
+        product: e.target.value,
       },
     });
     setOrders(similarOrders.data);
@@ -297,7 +301,7 @@ export default function Orders() {
         <Input
           name="name"
           type="text"
-          placeholder="&#xf002; Search for orders..."
+          placeholder="&#xf002; Search by product..."
           style={{ fontFamily: 'Arial, FontAwesome' }}
           onChange={searchOrder}
         />
@@ -449,6 +453,15 @@ export default function Orders() {
                   lineHeight: '20px',
                 }}
               >
+                {orderSelected.product}
+              </p>
+              <p
+                style={{
+                  marginTop: '10px',
+                  color: '#444',
+                  lineHeight: '20px',
+                }}
+              >
                 {`${
                   orderSelected.recipient ? orderSelected.recipient.street : ''
                 }, ${
@@ -473,6 +486,7 @@ export default function Orders() {
                   marginTop: '10px',
                   color: '#444',
                   lineHeight: '20px',
+                  marginBottom: '0px',
                 }}
               >
                 {`${
