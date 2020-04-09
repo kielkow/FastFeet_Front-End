@@ -94,6 +94,9 @@ export const Content = styled.div`
     }
     li > span:first-child + span {
       width: 70%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     li > span:first-child + span + span {
       width: 50%;

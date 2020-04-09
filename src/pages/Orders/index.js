@@ -560,7 +560,7 @@ export default function Orders() {
               <span
                 style={{
                   fontWeight: 'bold',
-                  marginTop: '15px',
+                  marginTop: `${orderSelected.end_date ? '0px' : '15px'}`,
                   display: 'flex',
                   flexDirection: 'row',
                   marginBottom: `${orderSelected.canceled_at ? '0px' : '15px'}`,
